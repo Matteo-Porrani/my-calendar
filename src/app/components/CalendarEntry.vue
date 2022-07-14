@@ -1,17 +1,18 @@
 <template>
   <div id="calendar-entry" class="has-text-centered">
     <div class="calendar-entry-note">
-      <input type="text" placeholder="Type Something" v-model="inputEntry" required/>
       <p class="calendar-entry-day is-size-5">Day of event:
-        <span class="bold">{{ titleOfActiveDay }}</span>
+        <span class="tag is-primary is-size-4 has-text-weight-bold">{{ titleOfActiveDay }}</span>
+      </p>
+      <input type="text" placeholder="Type Something" v-model="inputEntry" required/>
+      <p v-if="error" class="error-alert tag is-danger is-size-6 has-text-weight-bold">
+        You must type something first!
       </p>
       <a class="button is-info is-big is-outlined"
          @click="submitEvent(inputEntry)"
       >Submit</a>
     </div>
-    <p v-if="error" style="color: red; font-size: 14px;">
-      You must type something first!
-    </p>
+
   </div>
 </template>
 
@@ -59,13 +60,15 @@ export default {
 
   .calendar-entry-note {
     input {
+      display: block;
       width: 300px;
       font-weight: 600;
       border: 0;
       border-bottom: 1px solid #CCC;
       font-size: 15px;
       height: 30px;
-      margin-bottom: 10px;
+      margin-inline: auto;
+      margin-bottom: 30px;
 
       &:focus {
         outline: none;
@@ -83,11 +86,20 @@ export default {
       }
     }
 
+    .error-alert {
+      display: block !important;
+      width: fit-content;
+      margin: 30px auto;
+
+    }
+
     .submit {
       display: block;
       margin: 0 auto;
     }
   }
+
+
 }
 
 </style>

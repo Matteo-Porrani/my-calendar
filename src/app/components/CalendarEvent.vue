@@ -6,14 +6,16 @@
       <div class="has-text-centered icons">
         <i class="fa fa-2x fa-pencil-square-o edit-icon"
            @click="editEvent(day.id, event.details)"></i>
-        <i class="fa fa-2x fa-trash-o delete-icon"></i>
+        <i class="fa fa-2x fa-trash-o delete-icon"
+           @click="deleteEvent(day.id, event.details)"></i>
       </div>
     </div>
 
     <div v-if="event.edit">
       <input type="text" :placeholder="event.details" v-model="newEventDetails">
       <div class="has-text-centered icons">
-        <i @click="updateEvent(day.id, event.details, newEventDetails)" class="fa fa-check"></i>
+        <i @click="updateEvent(day.id, event.details, newEventDetails)"
+           class="fa fa-2x fa-check"></i>
       </div>
     </div>
 
@@ -39,6 +41,9 @@ export default {
       if (updatedEventDetails === '') updatedEventDetails = originalEventDetails;
       store.updateEvent(dayId, originalEventDetails, updatedEventDetails);
       this.newEventDetails = '';
+    },
+    deleteEvent(dayId, eventDetails) {
+      store.deleteEvent(dayId, eventDetails);
     },
   },
   computed: {

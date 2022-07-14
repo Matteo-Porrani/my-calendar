@@ -35,6 +35,11 @@ export const store = {
         eventObj.edit = false;
 
     },
+    deleteEvent(dayId, eventDetails) {
+        const dayObj = this.state.data.find(day => day.id === dayId);
+        const indexToDelete = dayObj.events.findIndex(item => item.details === eventDetails);
+        dayObj.events.splice(indexToDelete, 1);
+    },
     resetEditOfAllEvents() {
       this.state.data.map(dayObj => {
          dayObj.events.map(event => {
