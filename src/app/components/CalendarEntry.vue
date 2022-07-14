@@ -1,0 +1,93 @@
+<template>
+  <div id="calendar-entry" class="has-text-centered">
+    <div class="calendar-entry-note">
+      <input type="text" placeholder="Type Something" v-model="inputEntry" required/>
+      <p class="calendar-entry-day is-size-5">Day of event:
+        <span class="bold">{{ titleOfActiveDay }}</span>
+      </p>
+      <a class="button is-info is-big is-outlined"
+         @click="submitEvent(inputEntry)"
+      >Submit</a>
+    </div>
+    <p v-if="error" style="color: red; font-size: 14px;">
+      You must type something first!
+    </p>
+  </div>
+</template>
+
+
+<script>
+import {store} from '../store.js';
+
+export default {
+  name: "CalendarEntry",
+  data() {
+    return {
+      inputEntry: '',
+      error: false,
+    }
+  },
+  methods: {
+    submitEvent(eventDetails) {
+      if (eventDetails === '') return this.error = true;
+
+      // the component 'submitEvent()' method relies on its equivalent in 'store.js'
+      store.submitEvent(eventDetails);
+      this.inputEntry = '';
+      this.error = false;
+    },
+  },
+  computed: {
+    titleOfActiveDay() {
+      return store.getActiveDay().fullTitle;
+    }
+  }
+};
+</script>
+
+
+<style lang="scss" scoped>
+
+// SCSS for #calendar-entry
+#calendar-entry {
+  background: #FFF;
+  border: 1px solid #42b883;
+  border-radius: 10px;
+  width: 40vw;
+  margin: 0 auto;
+  padding: 20px;
+
+  .calendar-entry-note {
+    input {
+      width: 300px;
+      font-weight: 600;
+      border: 0;
+      border-bottom: 1px solid #CCC;
+      font-size: 15px;
+      height: 30px;
+      margin-bottom: 10px;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .calendar-entry-day {
+      color: #42b883;
+      font-size: 12px;
+      margin-bottom: 10px;
+      padding-bottom: 5px;
+
+      .bold {
+        font-weight: 600;
+      }
+    }
+
+    .submit {
+      display: block;
+      margin: 0 auto;
+    }
+  }
+}
+
+</style>
